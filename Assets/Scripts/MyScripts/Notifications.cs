@@ -27,8 +27,12 @@ public class Notifications : MonoBehaviour
     {
         yield return new WaitForSeconds(0.8f);
         // check notifications
-        socket.Emit("get challenges", JsonUtility.ToJson(Global.m_user));
-
+        if(Global.socketConnected){
+            socket.Emit("get challenges", JsonUtility.ToJson(Global.m_user));
+        }
+        else {
+            StartCoroutine(GetChallenge());
+        }    
     }
     private void GotChallengeNotifications(SocketIOEvent socketIOEvent)
     {
